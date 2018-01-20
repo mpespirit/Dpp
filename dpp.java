@@ -19,17 +19,13 @@ class dpp{
         ArrayList text2 = new ArrayList();
         
         // Scan 2nd text file first and insert into an array
-        String line = in2.nextLine();
-        while (line != null) {
+        for (String line = in2.nextLine(); line != null; line = in2.nextLine()) {
         	text2.add(line);
-        	line = in2.nextLine();
         }
         
         // Scan 1st text file and insert into an array
-        line = in1.nextLine();
-        while (line != null) {
+        for (String line = in1.nextLine(); line != null; line = in1.nextLine()) {
         	text1.add(line);
-        	line = in1.nextLine();
         }
 
         // Close files
