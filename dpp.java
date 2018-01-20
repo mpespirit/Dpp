@@ -2,6 +2,7 @@
 
 import java.io.PrintWriter;
 import java.util.Scanner;
+import java.util.ArrayList;
 
 class dpp{    
     public static void main(String[] args) throws IOException{
@@ -16,9 +17,23 @@ class dpp{
 
         // Count number of lines and store each line in String[]
         in = new Scanner(new File(args[0]));
-        
-        // Close files
+        String line = in.nextLine();
+        int count = 0;
+        while (line != null) {
+            count++;
+            line.nextLine();
+        }
         in.close();
+
+        ArrayList text1 = new ArrayList();
+        ArrayList text2 = new ArrayList();
+        for (int i = 0; i < count; i++) {
+        
+        }
+
+        // Close files
+        in1.close();
+        in2.close();
         out.close();
     }
 }
