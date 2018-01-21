@@ -40,8 +40,27 @@ class dpp{
   }
 
   //swap method
-  static void transpose(){
+  static void transpose(int lineNum1, int tokenInd1, int length1, int lineNum2,
+                        int tokenInd2, int length2){
+    ArrayList<String> tmp1 = new ArrayList<String>();
+    ArrayList<String> tmp2 = new ArrayList<String>();
 
+    //System.out.println("(" + lineNum1 + ", " + tokenInd1 + ", " + length1 + ")"); 
+    //System.out.println("(" + lineNum2 + ", " + tokenInd2 + ", " + length2 + ")"); 
+ 
+    // Insert the sequence of words into temp arrays
+    for (int i = 0; i < length1; i++) {
+      tmp1.add(textArr.get(lineNum1).get(tokenInd1 + i));
+    }
+    for (int i = 0; i < length2; i++) {
+      tmp2.add(textArr.get(lineNum2).get(tokenInd2 + i));
+    }
+    
+    // Swap both word sequences by first removing and then adding
+    textArr.get(lineNum1).subList(tokenInd1, tokenInd1 + length1).clear();
+    textArr.get(lineNum1).addAll(tokenInd1, tmp2);
+    textArr.get(lineNum2).subList(tokenInd2, tokenInd2 + length2).clear();
+    textArr.get(lineNum2).addAll(tokenInd2, tmp1);
   }
 
   public static void main(String[] args) throws IOException {
@@ -62,7 +81,6 @@ class dpp{
       for(int i =0; i < tokens.length; i++){
         tokenList.add(tokens[i]);
       }
-      tokenList.add(2, "SpenserSucks");
       textArr.add(tokenList);
     }
 
@@ -70,8 +88,16 @@ class dpp{
     //Add-Delete
     //key - token - line # - word index 
     ArrayList<String> seq = new ArrayList<String>();
-    seq.add("a"); seq.add("frog"); seq.add("2"); seq.add("3");
-    seq.add("d"); seq.add("0"); seq.add("2"); 
+    //seq.add("a"); seq.add("frog"); seq.add("2"); seq.add("3");
+    //seq.add("d"); seq.add("0"); seq.add("2"); 
+
+    // Test transpose
+    // key - line #1 - word index #1 - length of seq #1
+    //     - line #2 - word index #2 - length of seq #2
+    seq.add("t"); seq.add("0"); seq.add("0"); seq.add("4");
+                  seq.add("2"); seq.add("2"); seq.add("1");
+    seq.add("t"); seq.add("0"); seq.add("0"); seq.add("1");
+                  seq.add("1"); seq.add("5"); seq.add("9");
 
     //Code to execute transformation sequence
     for(int i = 0; i < seq.size(); i++){
@@ -89,11 +115,24 @@ class dpp{
         int tokenInd = Integer.parseInt(seq.get(i+2));
         delete(lineNum, tokenInd);
         i+=2;
+      } else if (seq.get(i).equals("t")) {
+        int lineNum1 = Integer.parseInt(seq.get(i+1));
+        int tokenInd1 = Integer.parseInt(seq.get(i+2));
+        int length1 = Integer.parseInt(seq.get(i+3));
+        int lineNum2 = Integer.parseInt(seq.get(i+4));
+        int tokenInd2 = Integer.parseInt(seq.get(i+5));
+        int length2 = Integer.parseInt(seq.get(i+6));
+        transpose(lineNum1, tokenInd1, length1, lineNum2, tokenInd2, length2);
+        i+=6;
+      } else {
+        System.out.println("Invalid transformation key: " + seq.get(i));
       }
     }
 
     // Print array list values for debugging
+    //System.out.println("Size = " + textArr.size());
     for(int i = 0; i < textArr.size(); i++){
+      //System.out.println("Size[" + i + "] = " + textArr.get(i).size());
       for(int j = 0; j < textArr.get(i).size(); j++){
         out.print(textArr.get(i).get(j)+" ");
       }
