@@ -8,6 +8,7 @@ import java.io.FileWriter;
 import java.io.PrintWriter;
 import java.io.IOException;
 import java.util.Scanner;
+import java.util.List;
 import java.util.ArrayList;
 
 class dpp{   
@@ -33,15 +34,24 @@ class dpp{
     Scanner in = new Scanner(new File(args[0]));
     PrintWriter out = new PrintWriter(new FileWriter("out"));
 
-    ArrayList<String> text = new ArrayList<String>();
+    List<List<String>> textArr = new ArrayList<List<String>>();
         
-    // Scan 1st text file and insert into an array
-    while(in.hasNextLine()){
-      text.add(in.nextLine());
+    // Scan text file and insert into dynamic array list
+    for(String line = in.nextLine(); in.hasNextLine(); line = in.nextLine()){
+      ArrayList<String> tokenList = new ArrayList<String>();
+      String[] tokens = line.split(" ");
+      for(int i =0; i < tokens.length; i++){
+        tokenList.add(tokens[i]);
+      }
+      textArr.add(tokenList);
     }
 
-    for(int i = 0; i < text.size(); i++){
-      out.println(text.get(i));
+    // Print array list values for debugging
+    for(int i = 0; i < textArr.size(); i++){
+      for(int j = 0; j < textArr.get(i).size(); j++){
+        out.print(textArr.get(i).get(j)+" ");
+      }
+      out.println("");
     }   
 
     // Close files
