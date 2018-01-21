@@ -11,9 +11,25 @@ import java.util.Scanner;
 import java.util.List;
 import java.util.ArrayList;
 
-class dpp{   
+/*
+ * Format:
+ * textArray [ singleList ]    singleList [ token ]
+ *           [ singleList ]               [ token ]
+ *           [ .......... ]               [ ..... ]
+ *           [ singleList ]               [ token ]
+ *
+ * So we want to modify textArray contents to add stuff
+ * textArray.get(index) and iterate through until you reach desired location
+ * add(textArray location, placement location or word?)
+ *    iterate through until you reach desired index or word
+ *    add at that location -> command?
+ *
+ */
+
+class dpp{
+  //    
   void add(){
-  
+    
   }
 
   void delete() {
@@ -43,7 +59,29 @@ class dpp{
       for(int i =0; i < tokens.length; i++){
         tokenList.add(tokens[i]);
       }
+      tokenList.add(2, "SpenserSucks");
       textArr.add(tokenList);
+    }
+
+    //Ok so we need to create an array of random transformation sequences
+    //Add-Delete
+    //key - token - line # - word index 
+    //List<List<String>> seqList = new ArrayList<List<String>>();
+    ArrayList<String> seq = new ArrayList<String>();
+    //seq.add("0"); seq.add("a"); seq.add("frog"); seq.add("d"); seq.add("2");
+    //seq.add("d"); seq.add("frog"); seq.add("t"); seq.add("3");
+    //seqList.add(seq);
+    seq.add("a"); seq.add("frog"); seq.add("2"); seq.add("3");
+    seq.add("d"); seq.add("Lorem"); seq.add("0"); 
+
+    //Code to execute transformation sequence
+    //add(word, lineIndex, tokenIndex)
+    for(int i = 0; i < seq.size(); i++){
+      if(seq.get(i).equals("a")){
+        System.out.println("Add");
+      } else if (seq.get(i).equals("d")) {
+        System.out.println("Delete");
+      }
     }
 
     // Print array list values for debugging
