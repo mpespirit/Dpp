@@ -27,12 +27,13 @@ import java.util.ArrayList;
  */
 
 class dpp{
-  //    
-  void add(){
+  // void add(token, lineNum, tokenInd)
+  // Inserts token at (line number, token index)
+  void add(String token, int lineNum, int tokenInd){
     
   }
 
-  void delete() {
+  void delete(String token, int lineNum) {
 
   }
 
@@ -66,21 +67,25 @@ class dpp{
     //Ok so we need to create an array of random transformation sequences
     //Add-Delete
     //key - token - line # - word index 
-    //List<List<String>> seqList = new ArrayList<List<String>>();
     ArrayList<String> seq = new ArrayList<String>();
-    //seq.add("0"); seq.add("a"); seq.add("frog"); seq.add("d"); seq.add("2");
-    //seq.add("d"); seq.add("frog"); seq.add("t"); seq.add("3");
-    //seqList.add(seq);
     seq.add("a"); seq.add("frog"); seq.add("2"); seq.add("3");
     seq.add("d"); seq.add("Lorem"); seq.add("0"); 
 
     //Code to execute transformation sequence
-    //add(word, lineIndex, tokenIndex)
     for(int i = 0; i < seq.size(); i++){
       if(seq.get(i).equals("a")){
         System.out.println("Add");
+        //add(word, lineNum, tokenInd)
+        int lineNum = Integer.parseInt(seq.get(i+2));
+        int tokenInd = Integer.parseInt(seq.get(i+3));
+        add(seq.get(i+1), lineNum, tokenInd);
+        i+=3;
       } else if (seq.get(i).equals("d")) {
         System.out.println("Delete");
+        //delete(word, lineNum)
+        int lineNum = Integer.parseInt(seq.get(i+2));
+        delete(seq.get(i+1), lineNum);
+        i+=2;
       }
     }
 
