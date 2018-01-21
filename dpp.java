@@ -27,18 +27,20 @@ import java.util.ArrayList;
  */
 
 class dpp{
+  public static List<List<String>> textArr = new ArrayList<List<String>>();
+
   // void add(token, lineNum, tokenInd)
   // Inserts token at (line number, token index)
-  void add(String token, int lineNum, int tokenInd){
-    
+  static void add(String token, int lineNum, int tokenInd){
+    textArr.get(lineNum).add(tokenInd, token);
   }
 
-  void delete(String token, int lineNum) {
-
+  static void delete(int lineNum, int tokenInd) {
+    textArr.get(lineNum).remove(tokenInd);
   }
 
   //swap method
-  void transpose(){
+  static void transpose(){
 
   }
 
@@ -51,7 +53,7 @@ class dpp{
     Scanner in = new Scanner(new File(args[0]));
     PrintWriter out = new PrintWriter(new FileWriter("out"));
 
-    List<List<String>> textArr = new ArrayList<List<String>>();
+    //List<List<String>> textArr = new ArrayList<List<String>>();
         
     // Scan text file and insert into dynamic array list
     for(String line = in.nextLine(); in.hasNextLine(); line = in.nextLine()){
@@ -69,7 +71,7 @@ class dpp{
     //key - token - line # - word index 
     ArrayList<String> seq = new ArrayList<String>();
     seq.add("a"); seq.add("frog"); seq.add("2"); seq.add("3");
-    seq.add("d"); seq.add("Lorem"); seq.add("0"); 
+    seq.add("d"); seq.add("0"); seq.add("2"); 
 
     //Code to execute transformation sequence
     for(int i = 0; i < seq.size(); i++){
@@ -83,8 +85,9 @@ class dpp{
       } else if (seq.get(i).equals("d")) {
         System.out.println("Delete");
         //delete(word, lineNum)
-        int lineNum = Integer.parseInt(seq.get(i+2));
-        delete(seq.get(i+1), lineNum);
+        int lineNum = Integer.parseInt(seq.get(i+1));
+        int tokenInd = Integer.parseInt(seq.get(i+2));
+        delete(lineNum, tokenInd);
         i+=2;
       }
     }
