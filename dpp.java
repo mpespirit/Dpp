@@ -31,12 +31,16 @@ class dpp{
 
   // void add(token, lineNum, tokenInd)
   // Inserts token at (line number, token index)
-  static void add(String token, int lineNum, int tokenInd){
-    textArr.get(lineNum).add(tokenInd, token);
+  static void add(ArrayList<String> tokenList, int lineNum, int tokenInd){
+    for(int i = 0; i < tokenList.size(); i++)
+      textArr.get(lineNum).add(tokenInd + i, tokenList.get(i));
   }
 
-  static void delete(int lineNum, int tokenInd) {
-    textArr.get(lineNum).remove(tokenInd);
+  static void delete(int lineNum, int startInd, int endInd) {
+    if(startInd == endInd)
+      textArr.get(lineNum).remove(startInd);
+    else 
+      textArr.get(lineNum).subList(startInd, endInd).clear();
   }
 
   //swap method
@@ -62,7 +66,7 @@ class dpp{
       for(int i =0; i < tokens.length; i++){
         tokenList.add(tokens[i]);
       }
-      tokenList.add(2, "SpenserSucks");
+      //tokenList.add(2, "SpenserSucks");
       textArr.add(tokenList);
     }
 
@@ -70,38 +74,49 @@ class dpp{
     //Add-Delete
     //key - token - line # - word index 
     ArrayList<String> seq = new ArrayList<String>();
-    seq.add("a"); seq.add("frog"); seq.add("2"); seq.add("3");
-    seq.add("d"); seq.add("0"); seq.add("2"); 
+    seq.add("a"); seq.add("2"); seq.add("3"); seq.add("frog"); 
+    seq.add("turkey"); seq.add("firetruck");
+    seq.add("d"); seq.add("0"); seq.add("0"); seq.add("2");
 
-    //Code to execute transformation sequence
+    //Code to execute transformation sequences
     for(int i = 0; i < seq.size(); i++){
       if(seq.get(i).equals("a")){
-        System.out.println("Add");
-        //add(word, lineNum, tokenInd)
-        int lineNum = Integer.parseInt(seq.get(i+2));
-        int tokenInd = Integer.parseInt(seq.get(i+3));
-        add(seq.get(i+1), lineNum, tokenInd);
-        i+=3;
-      } else if (seq.get(i).equals("d")) {
-        System.out.println("Delete");
-        //delete(word, lineNum)
-        int lineNum = Integer.parseInt(seq.get(i+1));
+        int lineNum  = Integer.parseInt(seq.get(i+1));
         int tokenInd = Integer.parseInt(seq.get(i+2));
-        delete(lineNum, tokenInd);
-        i+=2;
+        int count = i+3; 
+
+        ArrayList<String> tokenList = new ArrayList<String>();
+        while(!seq.get(count).equals("d") && !seq.get(count).equals("t")){
+          tokenList.add(seq.get(count));
+          count++;
+        }
+        add(tokenList, lineNum, tokenInd);
+        i += (count-1);
+      } else if (seq.get(i).equals("d")) {
+        int lineNum  = Integer.parseInt(seq.get(i+1));
+        int startInd = Integer.parseInt(seq.get(i+2));
+        int endInd   = Integer.parseInt(seq.get(i+3));
+        delete(lineNum, startInd, endInd);
+        i += 3;
+      } else if (seq.get(i).equals("t")) {
+        //transpose code
       }
     }
 
-    // Print array list values for debugging
+    printArr(out);   
+
+    // Close files
+    in.close();
+    out.close();
+  }
+
+  // Print array list values for debugging
+  static void printArr(PrintWriter out){
     for(int i = 0; i < textArr.size(); i++){
       for(int j = 0; j < textArr.get(i).size(); j++){
         out.print(textArr.get(i).get(j)+" ");
       }
       out.println("");
-    }   
-
-    // Close files
-    in.close();
-    out.close();
+    }
   }
 }
